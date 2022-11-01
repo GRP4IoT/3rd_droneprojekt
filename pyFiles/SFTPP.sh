@@ -7,7 +7,7 @@ i=192.168.137.122
 x=1
 fil=./fil123
 pingfunc () {
-    ping -c 1 $1 $i > /dev/null
+    #ping -c 1 $1 $i > /dev/null
     #[ $? -eq 0 ] && echo Node with IP: $i is up.
     #let x=x+1
     #hvis vi skal upload en file
@@ -16,8 +16,13 @@ pingfunc () {
     ncftpput -R -v -u $username -p $password $i /srv/ftp /home/g4py/kamera/billeder
     touch fil123
 }
-
-pingfunc
+#if statement til at tjekke om mathias's server er oppe inden den kører pingfunc funktionen
+if ping -c 1 $i &> /dev/null
+then
+    pingfunc
+else
+    echo "den er ikke oppe"
+fi
 #if statement til at slette billeder mappen og genere den igen for at undgå dupilications
 if [ -e "$fil" ];
 then
