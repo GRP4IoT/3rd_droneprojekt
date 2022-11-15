@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>G4Py Vid-stream</title>
+        <link rel="stylesheet" href='../static/style.css'/>
+    <style>
+		body {
+			text-align: center;
+		}
+    </style>
+    </head>
+    <body>
+        <h2>Video stream</h2>
+        <img src="{{ url_for('video_feed') }}" width="50%">
+        <hr>
+        <a href="/"class="button">(un)pause</a>
+    </body>
+</html>
