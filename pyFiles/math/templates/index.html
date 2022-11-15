@@ -1,0 +1,24 @@
+<!--
+   index.html
+   
+-->
+
+<html>
+  <head>
+    <title>G4Py picam</title>
+    <link rel="stylesheet" href='../static/style.css'/>
+    <style>
+		body {
+			text-align: center;
+		}
+    </style>
+  </head>
+  <body>
+    <h1>G4Py</h1>
+    <h4> Start/stop stream <a href="/start"class="button">(un)pause</a> {{ knapPause }} </h4>
+    <h4> Tag billede <a href="/snap"class="button">snap</a></h4>
+	<hr>
+	<h4> PAN Angle: <a href="/pan/-"class="button">-</a> [ {{ panServoAngle }} ] <a href="/pan/+"class="button">+</a> </h4>
+	<h4> TILT Angle: <a href="/tilt/-"class="button">-</a> [ {{ tiltServoAngle }} ] <a href="/tilt/+"class="button">+</a> </h4> 
+  </body>
+</html>
