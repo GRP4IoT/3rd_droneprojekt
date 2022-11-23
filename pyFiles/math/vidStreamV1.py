@@ -20,6 +20,7 @@ import datetime
 #from signal import pause
 #from gpiozero import Button
 #import pigpio
+
 # Raspberry Pi camera module (requires picamera package from Miguel Grinberg)
 from camera_pi import Camera
 
@@ -30,13 +31,16 @@ global panServoAngle
 global tiltServoAngle
 panServoAngle = 90
 tiltServoAngle = 90
-global knapPause
-knapPause = False
+
+#global knapPause
+#knapPause = False
 #knap
 #button = Button(4)
+
 # Servo pin numre
 panPin = 27
 tiltPin = 17
+
 #camera til at tage billeder:
 #cam = PiCamera()
 #cam.resolution = (1920, 1080)
@@ -89,17 +93,20 @@ def startKnap():
 #		else:
 #			knapPause = True
     print("redirecting to stream site")
-    return render_template('index.html')
+    templateData = {
+      'panServoAngle'	: panServoAngle,
+      'tiltServoAngle'	: tiltServoAngle,
+	}
+    return render_template('index.html', **templateData)
 
 
-# vi skal finde en måde at de-init kamera streamen
+# er nok fikset - vi skal finde en måde at de-init kamera streamen
 @app.route("/stop")
 def stopKnap():
     print("sending to picture site")
     templateData = {
       'panServoAngle'	: panServoAngle,
       'tiltServoAngle'	: tiltServoAngle,
-	  'knapPause'		: str(knapPause)
 	}
     return render_template('picture.html', **templateData)
 
@@ -119,7 +126,6 @@ def snapPic():
 	templateData = {
       'panServoAngle'	: panServoAngle,
       'tiltServoAngle'	: tiltServoAngle,
-	  'knapPause'		: str(knapPause)
 	}
 	return render_template('picture.html', **templateData, date = date)
 
@@ -153,7 +159,6 @@ def move(servo, angle):
 	templateData = {
       'panServoAngle'	: panServoAngle,
       'tiltServoAngle'	: tiltServoAngle,
-	  'knapPause'		: str(knapPause)
 	}
 	return render_template('index.html', **templateData)
 
