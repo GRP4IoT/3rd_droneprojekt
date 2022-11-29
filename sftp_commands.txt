@@ -1,0 +1,10 @@
+get /home/mathdesk/Pictures
+rename /home/mathdesk/123 1234
+rm /home/mathdesk/Pictures/*
+rmdir /home/mathdesk/Pictures
+mkdir /home/mathdesk/pictures
+rename /home/mathdesk/1234 123
+
+
+
+#du skal angive den rigtige stig i dette tilfælde får vi folderen pictures
