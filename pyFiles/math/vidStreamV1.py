@@ -13,13 +13,8 @@ import subprocess
 from time import sleep
 from flask import Flask, render_template, request, Response
 #det vi bruger til at tage billeder/knap
-#from picamera.array import PiRGBArray
-#import time
 from picamera import PiCamera
 import datetime
-#from signal import pause
-#from gpiozero import Button
-#import pigpio
 
 # Raspberry Pi camera module (requires picamera package from Miguel Grinberg)
 from camera_pi import Camera
@@ -32,21 +27,9 @@ global tiltServoAngle
 panServoAngle = 90
 tiltServoAngle = 90
 
-#global knapPause
-#knapPause = False
-#knap
-#button = Button(4)
-
 # Servo pin numre
 panPin = 27
 tiltPin = 17
-
-#camera til at tage billeder:
-#cam = PiCamera()
-#cam.resolution = (1920, 1080)
-#cam.vflip = True
-#cam.contrast = 10
-#cam.framerate = 32
 
 
 @app.route('/')
@@ -60,14 +43,6 @@ def index():
     return render_template('index.html', **templateData)
 
 
-#function til at tage billede flyttet til camera_pi som static method
-#def picture():
-#	date = str(datetime.datetime.now())
-#	file_name = f'/home/g4py/kamera/billeder/pic_{date}.png'
-#	cam.capture(file_name)
-#	print("pic taken")
-
-
 # Inkorperer en knap der tænder og slukker for video stream funktionen
 #flyttet til en anden html side i stedet for tænd/sluk
 def gen(camera):
@@ -78,20 +53,13 @@ def gen(camera):
 			b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 	else:
 		print("Test råb")
+		#Legacy efter noget test
 
-# Knap funktion der tænder og slukker for video streamen
-# den kommer til at linke til en anden html side der streames til
+
+# genbrugt funktion til at starte/stoppe vid-stream
+# nu brugt til at start streamen igen ved at linke tilbage til index med vid-streamen
 @app.route("/start")
 def startKnap():
-#	global knapPause
-#	global panServoAngle
-#	global tiltServoAngle
-#
-#	if 'startstop':
-#		if knapPause == True:
-#			knapPause = False
-#		else:
-#			knapPause = True
     print("redirecting to stream site")
     templateData = {
       'panServoAngle'	: panServoAngle,
@@ -100,7 +68,7 @@ def startKnap():
     return render_template('index.html', **templateData)
 
 
-# er nok fikset - vi skal finde en måde at de-init kamera streamen
+# 'stopper' videostreamen ved at sende til en anden html side
 @app.route("/stop")
 def stopKnap():
     print("sending to picture site")
@@ -111,6 +79,7 @@ def stopKnap():
     return render_template('picture.html', **templateData)
 
 
+#Funktion der tager et billede med en cmd / shell command
 @app.route('/snap')
 def snapPic():
 	sleep(1)
@@ -130,6 +99,7 @@ def snapPic():
 	return render_template('picture.html', **templateData, date = date)
 
 
+#Generer 'billedet' til videostreamen i html
 @app.route('/video_feed')
 def video_feed():
 	"""Video streaming route. 
@@ -138,7 +108,7 @@ def video_feed():
 					mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-
+#funktion lavet af MJrobot/Grinberg til at dreje servomotorer via html/flask
 @app.route("/<servo>/<angle>")
 def move(servo, angle):
 	global panServoAngle
@@ -163,6 +133,6 @@ def move(servo, angle):
 	return render_template('index.html', **templateData)
 
 
-
+# start flask på port 80
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port =80, debug=True, threaded=True)
