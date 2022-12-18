@@ -1,0 +1,27 @@
+<!--
+   index.html
+  
+-->
+
+<html>
+  <head>
+    <title>G4Py picam</title>
+    <link rel="stylesheet" href='../static/style.css'/>
+    <style>
+		body {
+			text-align: center;
+		}
+    </style>
+  </head>
+  <body>
+  <h1>G4Py</h1>
+  <!--<h4> Start/stop stream <a href="/start"class="button">(un)pause</a> {{ knapPause }} </h4>-->
+  <h2>Video stream</h2>
+  <img src="{{ url_for('video_feed') }}" width="50%">
+  <hr>
+  <a href="/stop"class="button">pause for picture</a>
+	<hr>
+	<h4> PAN Angle: <a href="/pan/-"class="button">-</a> [ {{ panServoAngle }} ] <a href="/pan/+"class="button">+</a> </h4>
+	<h4> TILT Angle: <a href="/tilt/-"class="button">-</a> [ {{ tiltServoAngle }} ] <a href="/tilt/+"class="button">+</a> </h4> 
+  </body>
+</html>
